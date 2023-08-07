@@ -1,25 +1,30 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { getAllLibros, getLibroById, createLibro, updateLibro, deleteLibro} = require("../controllers/libroController");
+// Importar el controlador de usuarios
+const {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUserById,
+  deleteUser
+} = require('../controllers/usersController');
 
+// Ruta para obtener la lista de usuarios
+router.get('/', getAllUsers);
 
-// Importamos la libreria para validar scopes
-const { requiredScopes } = require("express-oauth2-jwt-bearer");
+// Ruta para obtener los detalles de un usuario por su ID
+router.get('/:id', getUserById);
 
-// Ruta para obtener todos los libros
-router.get("/", requiredScopes("read:libros"), getAllLibros);
+// Ruta para crear un nuevo usuario
+router.post('/', createUser);
 
-// Ruta para obtener un libro por id
-router.get("/:id", requiredScopes("read:libros"), getLibroById);
+// Ruta para editar la información de un usuario existente
+router.put('/:id', updateUserById);
 
-// Ruta para crear un nuevo Libro
-router.post("/", requiredScopes("write:libros"), createLibro);
+// Ruta para borrar un usuario por su ID
+router.delete('/:id', deleteUser);
 
-// Ruta para actualizar un Libro existente
-router.put("/:id", requiredScopes("write:libros"), updateLibro);
-
-// Ruta para eliminar un Libro
-router.delete("/:id", requiredScopes("write:libros"), deleteLibro);
-
+// Exportar el enrutador de usuarios
 module.exports = router;
+
